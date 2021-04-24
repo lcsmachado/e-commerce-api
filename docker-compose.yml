@@ -7,7 +7,11 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - postgres:/var/lib/postgresql/data
-
+  mail:
+    image: schickling/mailcatcher
+    ports:
+        - 1025:1025
+        - 1080:1080
   app:
     build: .
     command: bash start.sh
@@ -20,6 +24,7 @@ services:
       - gems:/gems
     depends_on:
       - db
+      - mail
 
 volumes:
   postgres:
